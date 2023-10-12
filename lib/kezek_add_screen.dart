@@ -4,6 +4,7 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class KezekCarAddScreen extends StatefulWidget {
   final int count;
@@ -197,7 +198,12 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
                       child: ElevatedButton(
                         style: AppStyles.activeButton,
                         onPressed: () async {
-                          addKezek();
+                          // addKezek();
+                          String url =
+                              'https://kaspi.kz/transfers/categories/kaspi-client?destCardNumber=4400430185221758&requisiteinputMethod=scan-card-camera';
+                          if (!await launchUrl(Uri.parse(url))) {
+                            throw Exception('Could not launch $url');
+                          }
                         },
                         child: const Text(
                           "Кезекке тұру",
