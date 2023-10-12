@@ -15,6 +15,18 @@ class AppStyles {
     // ),
   );
 
+  static ButtonStyle kaspiButton = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+    shape: MaterialStateProperty.all<OutlinedBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+    ),
+    // fixedSize: MaterialStateProperty.all<Size>(
+    //   const Size(20, 40),
+    // ),
+  );
+
   static ButtonStyle nonActiveButton = ButtonStyle(
     backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
     shape: MaterialStateProperty.all<OutlinedBorder>(

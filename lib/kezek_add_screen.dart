@@ -27,6 +27,7 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
   final TextEditingController searchMarkController = TextEditingController();
   List<String> marksList = [];
   List<String> marksId = [];
+  int totalPrice = 0;
 
   String? selectedModel;
   final TextEditingController searchModelController = TextEditingController();
@@ -167,8 +168,11 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
               ),
               if (uslugiName.isNotEmpty) uslugiWidget(),
               if (selectedUslugi.isNotEmpty) markWidget(),
-              if (selectedMark != null) modelWidget(),
-              if (selectedModel != null)
+              if (selectedMark != null && selectedUslugi.isNotEmpty)
+                modelWidget(),
+              if (selectedModel != null &&
+                  selectedUslugi.isNotEmpty &&
+                  selectedMark != null)
                 Column(
                   children: [
                     buildTextFormField(
@@ -192,11 +196,11 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
                       TextInputType.phone,
                     ),
                     const SizedBox(height: 10),
-                    Container(
+                    SizedBox(
                       width: double.infinity,
                       height: 50,
                       child: ElevatedButton(
-                        style: AppStyles.activeButton,
+                        style: AppStyles.kaspiButton,
                         onPressed: () async {
                           // addKezek();
                           String url =
@@ -205,8 +209,8 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
                             throw Exception('Could not launch $url');
                           }
                         },
-                        child: const Text(
-                          "Кезекке тұру",
+                        child: Text(
+                          "Аванс төлеу: $totalPrice",
                           style: CustomTextStyles.s16w400cw,
                         ),
                       ),
@@ -245,7 +249,7 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
                   isSelected
                       ? selectedUslugi.remove(item)
                       : selectedUslugi.add(item);
-                  setState(() {}); // Перерисовываем виджет
+                  setState(() {});
                 },
                 child: Container(
                   padding:
@@ -394,6 +398,8 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
           onChanged: (value) {
             setState(() {
               selectedMark = value;
+              selectedModel = null;
+              modelsList.clear;
               getAutoModels(marksId[marksList.indexOf(selectedMark!)]);
             });
           },
