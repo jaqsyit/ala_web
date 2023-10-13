@@ -6,16 +6,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class KezekCarAddScreen extends StatefulWidget {
+class KezekCarAddWidget extends StatefulWidget {
   final int count;
 
-  const KezekCarAddScreen({super.key, required this.count});
+  const KezekCarAddWidget({super.key, required this.count});
 
   @override
-  State<KezekCarAddScreen> createState() => _KezekCarAddScreenState();
+  State<KezekCarAddWidget> createState() => _KezekCarAddWidgetState();
 }
 
-class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
+class _KezekCarAddWidgetState extends State<KezekCarAddWidget> {
   final TextEditingController equipmentController = TextEditingController();
   final TextEditingController yearController = TextEditingController();
   final TextEditingController telController = TextEditingController();
@@ -149,77 +149,64 @@ class _KezekCarAddScreenState extends State<KezekCarAddScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: AppBar(
-      //   centerTitle: true,
-      //   title: const Text('Кезекке тұру'),
-      //   backgroundColor: AppStyles.primaryColor,
-      //   iconTheme: const IconThemeData(color: Colors.black),
-      // ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/img/logo.png',
-                width: 200,
-              ),
-              if (uslugiName.isNotEmpty) uslugiWidget(),
-              if (selectedUslugi.isNotEmpty) markWidget(),
-              if (selectedMark != null && selectedUslugi.isNotEmpty)
-                modelWidget(),
-              if (selectedModel != null &&
-                  selectedUslugi.isNotEmpty &&
-                  selectedMark != null)
-                Column(
-                  children: [
-                    buildTextFormField(
-                      equipmentController,
-                      'Комплектация',
-                      TextInputType.name,
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 50),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          
+          if (uslugiName.isNotEmpty) uslugiWidget(),
+          if (selectedUslugi.isNotEmpty) markWidget(),
+          if (selectedMark != null && selectedUslugi.isNotEmpty)
+            modelWidget(),
+          if (selectedModel != null &&
+              selectedUslugi.isNotEmpty &&
+              selectedMark != null)
+            Column(
+              children: [
+                buildTextFormField(
+                  equipmentController,
+                  'Комплектация',
+                  TextInputType.name,
+                ),
+                buildTextFormField(
+                  yearController,
+                  'Жылы',
+                  TextInputType.number,
+                ),
+                buildTextFormField(
+                  commentController,
+                  'Комментарий',
+                  TextInputType.multiline,
+                ),
+                buildTextFormField(
+                  telController,
+                  'Телефон',
+                  TextInputType.phone,
+                ),
+                const SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  height: 50,
+                  child: ElevatedButton(
+                    style: AppStyles.kaspiButton,
+                    onPressed: () async {
+                      // addKezek();
+                      String url =
+                          'https://kaspi.kz/transfers/categories/kaspi-client?destCardNumber=4400430185221758&requisiteinputMethod=scan-card-camera';
+                      if (!await launchUrl(Uri.parse(url))) {
+                        throw Exception('Could not launch $url');
+                      }
+                    },
+                    child: Text(
+                      "Аванс төлеу: $totalPrice",
+                      style: CustomTextStyles.s16w400cw,
                     ),
-                    buildTextFormField(
-                      yearController,
-                      'Жылы',
-                      TextInputType.number,
-                    ),
-                    buildTextFormField(
-                      commentController,
-                      'Комментарий',
-                      TextInputType.multiline,
-                    ),
-                    buildTextFormField(
-                      telController,
-                      'Телефон',
-                      TextInputType.phone,
-                    ),
-                    const SizedBox(height: 10),
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: ElevatedButton(
-                        style: AppStyles.kaspiButton,
-                        onPressed: () async {
-                          // addKezek();
-                          String url =
-                              'https://kaspi.kz/transfers/categories/kaspi-client?destCardNumber=4400430185221758&requisiteinputMethod=scan-card-camera';
-                          if (!await launchUrl(Uri.parse(url))) {
-                            throw Exception('Could not launch $url');
-                          }
-                        },
-                        child: Text(
-                          "Аванс төлеу: $totalPrice",
-                          style: CustomTextStyles.s16w400cw,
-                        ),
-                      ),
-                    ),
-                  ],
-                )
-            ],
-          ),
-        ),
+                  ),
+                ),
+              ],
+            )
+        ],
       ),
     );
   }

@@ -1,5 +1,4 @@
 import 'package:ala_web/firebase_options.dart';
-import 'package:ala_web/kezek_add_screen.dart';
 import 'package:ala_web/landing_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

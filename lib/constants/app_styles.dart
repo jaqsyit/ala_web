@@ -90,7 +90,7 @@ class CustomTextStyles {
     fontWeight: FontWeight.w600,
   );
 
-  static const TextStyle s35w400cb = TextStyle(
+  static const TextStyle s30w400cb = TextStyle(
     color: Colors.black,
     fontSize: 35,
     fontFamily: 'SF Pro Display',
